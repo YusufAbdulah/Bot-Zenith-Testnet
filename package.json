@@ -1,0 +1,19 @@
+{
+  "name": "zenith-testnet-faucet-bot",
+  "version": "1.0.0",
+  "author": "Yusuf Abdullah",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node bot.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "chalk": "6.0.1",
+    "ethers": "6.17.0",
+    "undici": "8.11.2"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}
