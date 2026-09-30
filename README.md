@@ -1,4 +1,4 @@
-# Zenith EVM Testnet Bot
+# 🚀 Zenith EVM Testnet Bot
 
 > **Created by [Yusuf Abdullah](https://github.com/YusufAbdulah)**
 
@@ -10,12 +10,12 @@ Bot otomatis untuk klaim faucet, membuat wallet, dan cek saldo di Zenith EVM Tes
 
 ### Add Network (MetaMask)
 
-| Parameter  | Value                                        |
-|------------|----------------------------------------------|
-| **RPC**    | `https://rpc.testnet.zenith.network/`        |
-| **Chain ID** | `936485`                                   |
-| **Symbol** | `ZTH`                                        |
-| **Explorer** | https://explorer.testnet.zenith.network/   |
+| Parameter    | Value                                     |
+|--------------|-------------------------------------------|
+| **RPC**      | `https://rpc.testnet.zenith.network/`     |
+| **Chain ID** | `936485`                                  |
+| **Symbol**   | `ZTH`                                     |
+| **Explorer** | https://explorer.testnet.zenith.network/  |
 
 ### 🔗 Links
 
@@ -25,35 +25,92 @@ Bot otomatis untuk klaim faucet, membuat wallet, dan cek saldo di Zenith EVM Tes
 
 ---
 
-Menu bot:
+## 📋 Fitur Bot
 
 ```text
 [1] Create EVM Wallet
-[2] Claim Faucet (Running)
+[2] Claim Faucet (Auto Running)
 [3] Cek Balance $ZTH
 [q] Quit
 ```
 
-Perlu Node.js 22.19+. `npm install` memasang `ethers` untuk pembuatan wallet, `chalk` untuk log berwarna, dan `undici` untuk proxy. Jalankan dari folder ini:
+| Menu | Fungsi |
+|------|--------|
+| **[1] Create Wallet** | Buat 1–100 wallet EVM baru secara otomatis |
+| **[2] Claim Faucet** | Klaim faucet ZTH otomatis untuk semua alamat, auto-loop setelah cooldown |
+| **[3] Cek Balance** | Cek saldo native ZTH semua wallet sekaligus |
 
-```powershell
+---
+
+## 📦 Persyaratan
+
+- **Node.js** versi `22.19` atau lebih baru — [Download Node.js](https://nodejs.org/)
+- **Git** (untuk clone repo) — [Download Git](https://git-scm.com/)
+
+---
+
+## 📖 Tutorial Instalasi & Penggunaan
+
+### Step 1 — Clone Repository
+
+```bash
+git clone https://github.com/YusufAbdulah/bot-zenith-testnet.git
+cd bot-zenith-testnet
+```
+
+### Step 2 — Install Dependencies
+
+```bash
 npm install
+```
+
+### Step 3 — Jalankan Bot
+
+```bash
 npm start
 ```
 
-Menu **[1]** meminta jumlah wallet (1–100), lalu menambahkan mnemonic, private key, dan address ke `akun.json`. Alamat baru juga ditambahkan ke `address.txt`. File `akun.json` berisi rahasia wallet dalam teks biasa: simpan hanya di perangkat pribadi, jangan bagikan, dan gunakan wallet ini untuk testnet saja. Bot tidak memakai private key untuk klaim.
+Bot akan menampilkan menu interaktif di terminal.
 
-Menu **[2]** membaca `address.txt` (satu alamat `0x...` per baris), menghapus duplikat saat dibaca, dan mengklaim secara berurutan. File ini sudah berisi alamat yang Anda pakai pada bot Python. Bot menggunakan `GET /api/faucet` untuk status dan `POST /api/faucet` untuk klaim. Jeda tiap alamat mengikuti JSON respons klaim bila tersedia; jika respons sukses tidak menyebut waktu, bot memakai `cooldownMinutes` dari status (saat diperiksa: 30 menit). State klaim disimpan di `%LOCALAPPDATA%\zenith-faucet\<alamat>.json`, lokasi yang sama dengan bot Python lama. Ketik `q` lalu Enter untuk kembali ke menu. **Hentikan bot Python lama sebelum menjalankan menu [2]** agar tidak ada dua proses mengklaim alamat yang sama.
+---
 
-Menu **[3]** membaca alamat yang sama lalu memeriksa saldo native ZTH melalui RPC `https://rpc.testnet.zenith.network`. Bot memverifikasi chain ID `936485` sebelum meminta saldo. Explorer: https://explorer.testnet.zenith.network.
+## 🔧 Cara Pakai Setiap Menu
 
-Layar dibersihkan saat memilih menu dan saat kembali ke menu utama. Setelah menu [1] atau [3], tekan Enter untuk kembali. Menu [2] terus berjalan dan mengulang klaim setelah cooldown setiap alamat sampai Anda mengetik `q` lalu Enter; terminal harus tetap terbuka.
+### ✅ Menu [1] — Create EVM Wallet
 
-## Proxy (opsional)
+1. Pilih `1` lalu tekan Enter
+2. Masukkan jumlah wallet yang ingin dibuat (1–100)
+3. Bot akan otomatis:
+   - Generate wallet baru (mnemonic, private key, address)
+   - Simpan ke `akun.json`
+   - Tambahkan address ke `address.txt`
 
-Tanpa `proxy.txt`, atau bila file itu kosong saat menu dimulai, bot memakai koneksi langsung. Untuk memakai proxy, buat `proxy.txt` di folder bot dengan satu proxy per baris. Format yang didukung:
+> ⚠️ **Penting:** File `akun.json` berisi **private key & mnemonic** dalam teks biasa. Jangan pernah dibagikan! Gunakan wallet ini untuk **testnet saja**.
+
+### ✅ Menu [2] — Claim Faucet (Auto)
+
+1. Pilih `2` lalu tekan Enter
+2. Bot membaca semua alamat dari `address.txt`
+3. Klaim dilakukan satu per satu secara berurutan
+4. Setelah semua alamat diklaim, bot **otomatis menunggu cooldown** lalu klaim ulang
+5. Ketik `q` lalu Enter untuk kembali ke menu utama
+
+> 💡 **Tips:** Biarkan terminal terbuka agar bot terus berjalan otomatis.
+
+### ✅ Menu [3] — Cek Balance $ZTH
+
+1. Pilih `3` lalu tekan Enter
+2. Bot akan menampilkan saldo ZTH dari semua alamat di `address.txt`
+3. Tekan Enter untuk kembali ke menu
+
+---
+
+## 🌐 Proxy (Opsional)
+
+Jika ingin menggunakan proxy, buat file `proxy.txt` di folder bot dengan satu proxy per baris:
 
 ```text
+# Format yang didukung:
 127.0.0.1:8080
 127.0.0.1:8080:user:password
 http://user:password@proxy.example:8080
@@ -61,8 +118,74 @@ https://proxy.example:8443
 socks5://user:password@proxy.example:1080
 ```
 
-Proxy dibagikan ke address secara bergiliran bila jumlah address lebih banyak. Bot membatasi **maksimal 10 percobaan POST klaim per proxy dalam jendela 3 menit**. Respons HTTP 429 yang jelas menyebut **IP/proxy** memberi proxy tersebut cooldown minimal 3 menit (lebih lama bila server meminta), kemudian bot mencoba proxy lain. Setelah 429 dari beberapa proxy berbeda, bot menjeda seluruh klaim. Respons seperti `This address already claimed` hanya menjeda **address itu** sesuai `retryAfterSeconds` dari JSON, lalu bot lanjut ke address berikutnya tanpa merotasi proxy. Bila penyebab 429 tidak jelas, bot menjeda address tersebut tanpa menganggap proxy rusak. Proxy yang gagal koneksi atau autentikasi dihapus dari `proxy.txt` dan diganti proxy yang masih tersedia.
+### Cara Kerja Proxy
 
-Hitungan klaim dan cooldown proxy disimpan di `%LOCALAPPDATA%\zenith-faucet\proxy-rate.json`, sehingga batas 3 menit tetap berlaku setelah bot direstart. File state ini memakai hash proxy dan tidak menyimpan kredensialnya. Versi ini membersihkan cooldown proxy yang keliru dari state bot lama saat pertama kali dibaca, tanpa menghapus hitungan klaim.
+| Fitur | Keterangan |
+|-------|------------|
+| **Rotasi otomatis** | Proxy digilir ke semua address secara merata |
+| **Rate limit** | Maks 10 klaim per proxy dalam 3 menit |
+| **Auto cooldown** | Proxy yang kena HTTP 429 otomatis dijeda |
+| **Auto remove** | Proxy gagal/mati otomatis dihapus dari `proxy.txt` |
+| **State persist** | Cooldown & hitungan klaim tersimpan walau bot direstart |
 
-Jika semua proxy sedang cooldown atau mencapai batas, address menunggu waktu terdekat. Jika semua proxy terhapus, bot menunggu Anda menambahkan proxy baru dan **tidak** berpindah ke koneksi langsung. Menu saldo juga memakai proxy yang tersedia. `proxy.txt` dapat berisi kredensial dan sudah masuk `.gitignore`.
+> Tanpa `proxy.txt` (atau file kosong), bot jalan dengan koneksi langsung tanpa proxy.
+
+---
+
+## 📁 Struktur File
+
+```
+bot-zenith-testnet/
+├── bot.mjs          # Main bot (menu, faucet claim, wallet, balance)
+├── proxy.mjs        # Proxy pool & rotation logic
+├── package.json     # Dependencies & scripts
+├── .gitignore       # Mengecualikan file sensitif dari git
+├── LICENSE          # MIT License
+├── README.md        # Dokumentasi ini
+│
+├── akun.json        # 🔒 Auto-generated (private key & mnemonic)
+├── address.txt      # 🔒 Auto-generated (daftar alamat wallet)
+└── proxy.txt        # 🔒 Optional (daftar proxy)
+```
+
+> File yang ditandai 🔒 tidak akan ter-upload ke GitHub (sudah masuk `.gitignore`).
+
+---
+
+## ❓ FAQ
+
+<details>
+<summary><b>Bot error "address.txt belum ada"</b></summary>
+
+Gunakan Menu **[1]** untuk membuat wallet terlebih dahulu, atau buat file `address.txt` manual dengan satu alamat `0x...` per baris.
+</details>
+
+<details>
+<summary><b>Berapa lama cooldown antar klaim?</b></summary>
+
+Cooldown mengikuti respons server (saat ini sekitar **30 menit** per alamat). Bot otomatis menunggu dan klaim ulang.
+</details>
+
+<details>
+<summary><b>Apakah aman untuk dipakai?</b></summary>
+
+Bot ini hanya untuk **testnet**. Bot tidak mengirim transaksi dan tidak membutuhkan private key untuk klaim faucet. Namun file `akun.json` berisi private key, jadi jaga kerahasiaannya.
+</details>
+
+<details>
+<summary><b>Bisa pakai di VPS/Linux?</b></summary>
+
+Bisa! Pastikan Node.js 22.19+ sudah terpasang. Perintah sama: `npm install` lalu `npm start`.
+</details>
+
+---
+
+## 📄 License
+
+[MIT License](LICENSE) — Bebas digunakan, dimodifikasi, dan didistribusikan.
+
+---
+
+<p align="center">
+  <b>⭐ Jangan lupa kasih Star kalau repo ini membantu! ⭐</b>
+</p>
